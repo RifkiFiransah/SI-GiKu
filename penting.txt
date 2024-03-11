@@ -1,0 +1,78 @@
+/**** SIGIKU ****\
+
+* Tech
+PHP => Laravel
+JS
+Mysql
+Template admin => Modernize
+Laravel => spatie, breeze, sanctum, pusher
+nginx or ngrok
+
+* Fitur
+Dashboard
+Home
+CRUD User
+CRUD Program Kerja
+CRUD Divisi
+Absensi Kegiatan
+Detail Korkom dan Komisariat
+Profile Pengguna
+(-) notifikasi
+(-) two factor authentication
+(-) verifikasi email
+(-) chating
+
+* Database
+User:
+- uuid
+- divisi_id
+- prodi_id
+- name
+- email
+- alamat
+- no telp
+- password
+- role
+- img
+
+Divisi:
+- uuid
+- nama_divisi
+- ketua (user_id)
+
+Genbi:
+- uuid
+- name_genbi
+- alamat 
+
+Proker:
+- uuid
+- nama_proker
+- divisi_id
+- ketuplak(user_id)
+- deskripsi
+- status
+- tanggal_pelaksanaan
+
+Absensi:
+- uuid
+- user_id
+- divisi_id
+- nama_kegiatan
+- foto_kegiatan
+- resume_kegiatan
+
+Prodi: 
+- uuid 
+- nama_prodi
+- nama_fakultas
+
+
+
+
+
+
+
+
+
+
