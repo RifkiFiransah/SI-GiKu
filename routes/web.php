@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/backend/dashboard', function() {
-    return response()->view('backend.dashboard');
-});
+Route::get('/backend/dashboard',[DashboardController::class, 'index'])->name('backend.dashboard');
+Route::resource('/absensi',DashboardController::class);
+
+Route::resource('/users', UserController::class)->except('create');
 
 require __DIR__.'/auth.php';

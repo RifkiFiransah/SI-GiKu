@@ -2,7 +2,7 @@
     <div class="brand-logo d-flex align-items-center justify-content-between">
         {{-- <h1 class=""> --}}
             <a href="./index.html" class="text-nowrap logo-img text-dark fw-bold" style="font-weight: 900">
-            <img src="{{ asset('assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
+            <img src="{{ asset('assets/images/logos/GenBIoriginal.webp') }}" width="170" alt="" />
             {{-- SI-GiKu --}}
             </a>
         {{-- </h1> --}}
@@ -17,13 +17,13 @@
                 <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('backend.dashboard') ? 'active' : '' }}" href="{{ route('backend.dashboard') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-layout-dashboard"></i>
                     </span>
                     <span class="hide-menu">Dashboard</span>
                 </a>
-                <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('absensi.*') ? 'active' : '' }}" href="{{ route('absensi.index') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-file-spreadsheet"></i>
                     </span>
@@ -35,7 +35,7 @@
                 <span class="hide-menu">FEATURE</span>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./ui-buttons.html" aria-expanded="false">
                     <span>
                         <i class="ti ti-stack-2"></i>
                     </span>
@@ -43,7 +43,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./ui-card.html" aria-expanded="false">
                     <span>
                         <i class="ti ti-aperture"></i>
                     </span>
@@ -51,7 +51,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-users"></i>
                     </span>
@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./ui-alerts.html" aria-expanded="false">
                     <span>
                         <i class="ti ti-world"></i>
                     </span>
@@ -71,7 +71,7 @@
                 <span class="hide-menu">SELF</span>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./authentication-login.html" aria-expanded="false">
                     <span>
                         <i class="ti ti-user"></i>
                     </span>
@@ -79,7 +79,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./authentication-register.html" aria-expanded="false">
                     <span>
                         <i class="ti ti-logout"></i>
                     </span>

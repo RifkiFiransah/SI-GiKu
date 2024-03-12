@@ -1,6 +1,84 @@
 @extends('backend.layouts.main')
 
 @section('content')
+    <div class="py-3 row">
+        <div class="col-md-3">
+            <div class="card card-stats bg-primary text-light">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="py-3 text-center icon-big">
+                                <i class="ti ti-users" style="font-size: 250%"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 d-flex align-items-center">
+                            <div class="numbers">
+                                <p class="card-category">Users</p>
+                                <h4 class="card-title text-light">1,294</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stats bg-secondary text-light">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="py-3 text-center icon-big">
+                                <i class="ti ti-stack-2" style="font-size: 250%"></i>
+                            </div>
+                        </div>
+                        <div class="col-8 d-flex align-items-center">
+                            <div class="numbers">
+                                <p class="card-category">Program Kerja</p>
+                                <h4 class="card-title text-light">1,294</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stats bg-danger text-light">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="py-3 text-center icon-big">
+                                <i class="ti ti-aperture" style="font-size: 250%"></i>
+                            </div>
+                        </div>
+                        <div class="col-7 d-flex align-items-center">
+                            <div class="numbers">
+                                <p class="card-category">Divisi</p>
+                                <h4 class="card-title text-light">1,294</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card card-stats bg-success text-light">
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="py-3 text-center icon-big">
+                                <i class="ti ti-world" style="font-size: 250%"></i>
+                            </div>
+                        </div>
+                        <div class="col-8 d-flex align-items-center">
+                            <div class="numbers">
+                                <p class="card-category">Genbi Komis</p>
+                                <h4 class="card-title text-light">1,294</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-8 d-flex align-items-strech">
             <div class="card w-100">
