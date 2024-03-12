@@ -7,7 +7,7 @@
                 <button type="button" class="ms-2 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="ti ti-user-plus"></i> Tambah
                     Data</button>
                 <button type="button" class="ms-2 btn btn-danger"><i class="ti ti-printer"></i> Print</button>
-                <button type="button" class="ms-2 btn btn-success"><i class="ti ti-file-spreadsheet"></i> Excel</button>
+                <a href="{{ route('users.excel') }}" target="__blank" class="ms-2 btn btn-success"><i class="ti ti-file-spreadsheet"></i> Excel</a>
                 <button type="button" class="ms-2 btn btn-warning"><i class="ti ti-report-analytics"></i> CSV</button>
             </div>
             @if (session()->has('message'))
@@ -83,7 +83,7 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                        </table>
+                          </table>
                     </div>
                 </div>
             </div>

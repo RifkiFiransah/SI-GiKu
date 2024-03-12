@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\Divisi;
 use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -26,13 +28,19 @@ class UserController extends Controller
         ]);
     }
 
+    public function table()
+    {
+        $users = User::with(['prodi', 'divisi'])->orderBy('name')->get();
+
+        return response()->view('backend.users.table', [
+            'title' => 'Data user',
+            'users' => $users,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -113,5 +121,10 @@ class UserController extends Controller
         User::where('id', $user->id)->delete();
 
         return redirect(route('users.index'))->with('message', 'Data berhasil di hapus');
+    }
+
+    public function export_excel()
+    {
+        return Excel::download(new UsersExport, 'anggota_genbiUniku.xlsx');
     }
 }

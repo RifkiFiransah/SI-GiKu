@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/backend/dashboard',[DashboardController::class, 'index'])->name('backend.dashboard');
 Route::resource('/absensi',DashboardController::class);
 
+Route::get('/users/export_excel', [UserController::class, 'export_excel'])->name('users.excel');
+Route::get('/users/table', [UserController::class, 'table'])->name('users.table');
 Route::resource('/users', UserController::class)->except('create');
 
 require __DIR__.'/auth.php';
