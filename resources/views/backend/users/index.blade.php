@@ -6,9 +6,9 @@
             <div class="flex-wrap px-1 py-2 d-flex justify-content-end">
                 <button type="button" class="ms-2 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="ti ti-user-plus"></i> Tambah
                     Data</button>
-                <button type="button" class="ms-2 btn btn-danger"><i class="ti ti-printer"></i> Print</button>
+                <a href="{{ route('users.pdf') }}" target="__blank" class="ms-2 btn btn-danger"><i class="ti ti-printer"></i> Print</a>
                 <a href="{{ route('users.excel') }}" target="__blank" class="ms-2 btn btn-success"><i class="ti ti-file-spreadsheet"></i> Excel</a>
-                <button type="button" class="ms-2 btn btn-warning"><i class="ti ti-report-analytics"></i> CSV</button>
+                <a href="{{ route('users.csv') }}" target="__blank" class="ms-2 btn btn-warning"><i class="ti ti-report-analytics"></i> CSV</a>
             </div>
             @if (session()->has('message'))
                 <div class="alert alert-success" role="alert">

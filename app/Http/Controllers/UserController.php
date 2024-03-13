@@ -8,6 +8,10 @@ use App\Models\Prodi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+// use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
+use Mpdf\Mpdf;
+use Barryvdh\DomPDF\Facade\Pdf;
+// use Spatie\LaravelPdf\Facades\Pdf;
 
 class UserController extends Controller
 {
@@ -126,5 +130,35 @@ class UserController extends Controller
     public function export_excel()
     {
         return Excel::download(new UsersExport, 'anggota_genbiUniku.xlsx');
+    }
+    
+    public function export_csv()
+    {
+        return Excel::download(new UsersExport, 'anggota_genbiUniku.csv', \Maatwebsite\Excel\Excel::CSV, [
+            'Content-Type' => 'text/csv',
+      ]);
+    }
+
+    public function export_pdf()
+    {
+        // return PDF::download(new UsersExport, 'anggota_genbiUniku.pdf');
+        $users = User::with(['divisi', 'prodi'])->orderBy('name')->get();
+        // return Excel::download(new UsersExport, 'anggota_genbiUniku.xlsx');
+
+        // return Excel::download(new UsersExport, 'anggota_genbiUniku.pdf', \Maatwebsite\Excel\Excel::MPDF);
+        // ddd($users);
+        // $pdf = Pdf::loadView('backend.users.table', ['users' => $users]);
+        // return $pdf->save('anggotaGenbi.pdf');
+        // return Pdf::view('pdfs.invoice', ['users' => $users])
+        //     ->format('a4')
+        //     ->name('your-invoice.pdf');
+        $mpdf = new \Mpdf\Mpdf();
+        // $mpdf->WriteHTML(view('backend.users.table', ['users' => $users]));
+        $mpdf->WriteHTML('<h1>Hello World</h1>');
+        $mpdf->Output('anggotaGenbi.pdf', 'D');
+        // $mpdf->Output();
+        // ddd($mpdf);
+        // return view('backend.users.table', ['users' => $users]);
+        // $pdf = PDF::loadView('');
     }
 }

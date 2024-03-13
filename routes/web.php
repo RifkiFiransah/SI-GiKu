@@ -34,6 +34,8 @@ Route::get('/backend/dashboard',[DashboardController::class, 'index'])->name('ba
 Route::resource('/absensi',DashboardController::class);
 
 Route::get('/users/export_excel', [UserController::class, 'export_excel'])->name('users.excel');
+Route::get('/users/export_pdf', [UserController::class, 'export_pdf'])->name('users.pdf');
+Route::get('/users/export_csv', [UserController::class, 'export_csv'])->name('users.csv');
 Route::get('/users/table', [UserController::class, 'table'])->name('users.table');
 Route::resource('/users', UserController::class)->except('create');
 
