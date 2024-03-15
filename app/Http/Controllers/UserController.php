@@ -153,9 +153,38 @@ class UserController extends Controller
         //     ->format('a4')
         //     ->name('your-invoice.pdf');
         $mpdf = new \Mpdf\Mpdf();
-        // $mpdf->WriteHTML(view('backend.users.table', ['users' => $users]));
-        $mpdf->WriteHTML('<h1>Hello World</h1>');
-        $mpdf->Output('anggotaGenbi.pdf', 'D');
+        $mpdf->loadView(view('backend.users.table', ['users' => $users]));
+        // $mpdf->WriteHTML('<table class="table mb-0 align-middle text-nowrap" style="border: 2px solid #4F73D9">
+        // <thead class="text-dark fs-4 bg-primary">
+        //     <tr>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">No</h6>
+        //         </th>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">Name</h6>
+        //         </th>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">Email</h6>
+        //         </th>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">Prodi</h6>
+        //         </th>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">Divisi</h6>
+        //         </th>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">Jabatan</h6>
+        //         </th>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">No Telp</h6>
+        //         </th>
+        //         <th class="border-bottom-0">
+        //             <h6 class="mb-0 fw-semibold">Alamat</h6>
+        //         </th>
+        //     </tr>
+        // </thead>
+        // </table>');
+        $mpdf->stream('anggotaGenbi.pdf', 'D');
         // $mpdf->Output();
         // ddd($mpdf);
         // return view('backend.users.table', ['users' => $users]);

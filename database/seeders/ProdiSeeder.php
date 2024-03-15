@@ -26,6 +26,21 @@ class ProdiSeeder extends Seeder
                     'name_prodi' => 'Pendidikan Bahasa Sastra Inggris',
                     'name_fakultas' => 'Fakultas Keguruan dan Ilmu Keguruan',
                 ],
+                [
+                    'id' => Str::uuid(),
+                    'name_prodi' => 'Pendidikan Matematika',
+                    'name_fakultas' => 'Fakultas Keguruan dan Ilmu Keguruan',
+                ],
+                [
+                    'id' => Str::uuid(),
+                    'name_prodi' => 'Manajemen',
+                    'name_fakultas' => 'Fakultas Ekonomi dan Bisnis',
+                ],
+                [
+                    'id' => Str::uuid(),
+                    'name_prodi' => 'Sistem Informasi',
+                    'name_fakultas' => 'Fakultas Ilmu Komputer',
+                ],
             ]
         );
     }

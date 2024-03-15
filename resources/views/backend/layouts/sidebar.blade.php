@@ -35,7 +35,7 @@
                 <span class="hide-menu">FEATURE</span>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./ui-buttons.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('prokers.*') ? 'active' : '' }}" href="{{ route('prokers.index') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-stack-2"></i>
                     </span>
@@ -43,7 +43,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./ui-card.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('divisions.*') ? 'active' : '' }}" href="{{ route('divisions.index') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-aperture"></i>
                     </span>
@@ -59,7 +59,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./ui-alerts.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('genbiers.*') ? 'active' : '' }}" href="{{ route('genbiers.index') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-world"></i>
                     </span>
@@ -71,7 +71,7 @@
                 <span class="hide-menu">SELF</span>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./authentication-login.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profil.index') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-user"></i>
                     </span>
@@ -79,7 +79,7 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('backend') ? 'active' : '' }}" href="./authentication-register.html" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('logout') ? 'active' : '' }}" href="{{ route('logout') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-logout"></i>
                     </span>

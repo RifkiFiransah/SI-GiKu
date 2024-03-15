@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'name' => 'Alya Naomi',
             // 'divisi_id' => $bph->id,
             'address' => 'Kabupaten Kuningan',
-            'no_telp' => '0812xxxxx',
+            'no_telp' => '0812',
             'role' => 'ketua',
             'email' => 'ketua@gmail.com',
             'password' => bcrypt('password123')
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'name' => 'Tiara',
             // 'divisi_id' => $bph->id,
             'address' => 'Kabupaten Kuningan',
-            'no_telp' => '0812xxxxx',
+            'no_telp' => '0812',
             'role' => 'sekertaris',
             'email' => 'sekertaris@gmail.com',
             'password' => bcrypt('password123')
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             'name' => 'Rifki',
             // 'divisi_id' => $kesehatan->id,
             'address' => 'Kabupaten Kuningan',
-            'no_telp' => '0812xxxxx',
+            'no_telp' => '0812',
             'role' => 'anggota',
             'email' => 'rifki@gmail.com',
             'password' => bcrypt('password123')

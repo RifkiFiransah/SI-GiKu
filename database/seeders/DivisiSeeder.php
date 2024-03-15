@@ -19,22 +19,22 @@ class DivisiSeeder extends Seeder
                 [
                     'id' => Str::uuid(),
                     'name_divisi' => 'Badan Pengurus Harian',
-                    'user_id' => null
+                    'head' => null
                 ],
                 [
                     'id' => Str::uuid(),
                     'name_divisi' => 'Kominfo',
-                    'user_id' => null
+                    'head' => null
                 ],
                 [
                     'id' => Str::uuid(),
                     'name_divisi' => 'Pendidikan',
-                    'user_id' => null
+                    'head' => null
                 ],
                 [
                     'id' => Str::uuid(),
                     'name_divisi' => 'Kesehatan',
-                    'user_id' => null
+                    'head' => null
                 ],
             ]
         );

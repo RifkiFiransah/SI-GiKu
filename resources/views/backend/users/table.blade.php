@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SI-GiKu | Export</title>
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
+    <link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8000/assets/images/logos/favicon.png" />
+    <link rel="stylesheet" href="http://127.0.0.1:8000/assets/css/styles.min.css" />
 </head>
 
 <body>
@@ -15,9 +15,9 @@
         data-sidebar-position="fixed" data-header-position="fixed"> --}}
     <div class="body-wrapper">
         <div class="container-fluid">
-            @if (strpos(url()->current(), 'export_excel') == false)
+            {{-- @if (strpos(url()->current(), 'export_excel') == false)
                 <h1 class="mt-3 mb-4 text-center text-uppercase fw-bold ">Data Anggota Genbi Uniku</h1>
-            @endif
+            @endif --}}
             <table class="table mb-0 align-middle text-nowrap" style="border: 2px solid #4F73D9">
                 <thead class="text-dark fs-4 bg-primary">
                     <tr>
@@ -47,7 +47,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                {{-- <tbody>
                     @forelse ($users as $user)
                         <tr>
                             <td class="border-bottom-0">
@@ -64,9 +64,6 @@
                             </td>
                             <td class="border-bottom-0">
                                 <p class="mb-0 fw-normal">{{ $user->Divisi->name_divisi ?? '' }}</p>
-                                {{-- <div class="gap-2 d-flex align-items-center">
-                      <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                  </div> --}}
                             </td>
                             <td class="border-bottom-0">
                                 <p class="mb-0 fw-normal">{{ $user->role }}</p>
@@ -83,14 +80,20 @@
                             <td colspan="4">Data Belum tersedia</td>
                         </tr>
                     @endforelse
-                </tbody>
+                </tbody> --}}
             </table>
         </div>
     </div>
     {{-- </div> --}}
 
     {{-- footer --}}
-    @include('backend.layouts.footer')
+    <script src="http://127.0.0.1:8000/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="http://127.0.0.1:8000/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="http://127.0.0.1:8000/assets/js/sidebarmenu.js"></script>
+    <script src="http://127.0.0.1:8000/assets/js/app.min.js"></script>
+    <script src="http://127.0.0.1:8000/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="http://127.0.0.1:8000/assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="http://127.0.0.1:8000/assets/js/dashboard.js"></script>
     {{-- end footer --}}
 </body>
 

@@ -19,16 +19,19 @@ class GenbiSeeder extends Seeder
                 [
                     'id' => Str::uuid(),
                     'name_genbi' => 'Genbi Cirebon Koordinator Komisariat',
+                    'ketua_umum' => 'Taufan Gemilang',
                     'address' => 'Kota Cirebon'
                 ],
                 [
                     'id' => Str::uuid(),
                     'name_genbi' => 'Genbi IAIN Syekh Nur Jati',
+                    'ketua_umum' => '',
                     'address' => 'Kota Cirebon'
                 ],
                 [
                     'id' => Str::uuid(),
                     'name_genbi' => 'Genbi Universitas Kuningan',
+                    'ketua_umum' => 'Alya Naomi',
                     'address' => 'Kabupaten Kuningan'
                 ],
             ]

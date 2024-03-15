@@ -12,7 +12,12 @@ class GenbiController extends Controller
      */
     public function index()
     {
-        //
+        $genbiers = Genbi::orderBy('name_genbi')->get();
+
+        return view('backend.genbiers.index', [
+            'title' => 'Data Genbi',
+            'genbiers' => $genbiers
+        ]);
     }
 
     /**
@@ -28,7 +33,20 @@ class GenbiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'id' => 'required',
+            'name_genbi' => 'required|unique:genbis',
+            'ketua_umum' => 'required|unique:genbis',
+            'address' => 'required'
+        ]);
+
+        $genbi = Genbi::create($validate);
+
+        if(!$genbi){
+            return redirect(route('genbiers.index'))->with('message', 'Data Genbi gagal ditambahkan');
+        }
+
+        return redirect(route('genbiers.index'))->with('message', 'Data Genbi berhasil ditambahkan');
     }
 
     /**
@@ -42,24 +60,46 @@ class GenbiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genbi $genbi)
+    public function edit(Genbi $genbi, $id)
     {
-        //
+        $genbi = Genbi::where('id', $id)->first();
+
+        // ddd($genbi);
+        return view('backend.genbiers.edit', [
+            'title' => 'Edit Genbi',
+            'genbi' => $genbi
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genbi $genbi)
+    public function update(Request $request, Genbi $genbi, $id)
     {
-        //
+        $validate = $request->validate([
+            'id' => 'required',
+            'name_genbi' => 'required',
+            'ketua_umum' => 'required',
+            'address' => 'required'
+        ]);
+
+        $genbi = Genbi::findOrFail($id)->update($validate);
+        if(!$genbi){
+            return redirect(route('genbiers.index'))->with('message', 'Data Genbi gagal diupdate');
+        }
+        return redirect(route('genbiers.index'))->with('message', 'Data Genbi berhasil diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genbi $genbi)
+    public function destroy(Genbi $genbi, $id)
     {
-        //
+        $genbi = Genbi::findOrFail($id)->delete();
+
+        if(!$genbi){
+            return redirect(route('genbiers.index'))->with('message', 'Data Genbi gagal dihapus');
+        }
+        return redirect(route('genbiers.index'))->with('message', 'Data Genbi berhasil dihapus');
     }
 }

@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\GenbiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +42,11 @@ Route::get('/users/export_pdf', [UserController::class, 'export_pdf'])->name('us
 Route::get('/users/export_csv', [UserController::class, 'export_csv'])->name('users.csv');
 Route::get('/users/table', [UserController::class, 'table'])->name('users.table');
 Route::resource('/users', UserController::class)->except('create');
+
+Route::resource('divisions', DivisiController::class);
+Route::resource('prokers', ProkerController::class)->except('create');
+Route::resource('genbiers', GenbiController::class)->except('create');
+Route::resource('profil', ProfileController::class)->except('create');
+Route::resource('absensi', AbsensiController::class)->except('create');
 
 require __DIR__.'/auth.php';
