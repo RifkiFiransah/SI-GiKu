@@ -23,6 +23,8 @@
                     </span>
                     <span class="hide-menu">Dashboard</span>
                 </a>
+            </li>
+            <li class="sidebar-item">
                 <a class="sidebar-link {{ request()->routeIs('absensi.*') ? 'active' : '' }}" href="{{ route('absensi.index') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-file-spreadsheet"></i>

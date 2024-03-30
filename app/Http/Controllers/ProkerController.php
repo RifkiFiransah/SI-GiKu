@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Divisi;
 use App\Models\Proker;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,14 @@ class ProkerController extends Controller
      */
     public function index()
     {
-        //
+        $prokers = Proker::with(['divisi', 'user'])->orderBy('name_proker')->get();
+        $divisions = Divisi::orderBy('name_divisi')->get();
+
+        return view('backend.prokers.index', [
+            'title' => 'Proker Genbi',
+            'prokers' => $prokers,
+            'divisions' => $divisions
+        ]);
     }
 
     /**
@@ -28,7 +36,22 @@ class ProkerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'id' => 'required|uuid',
+            'name_proker' => 'required|string|unique:prokers',
+            'divisi_id' => 'required|uuid',
+            'description' => 'required|max:255',
+            'tanggal_pelaksanaan' => 'required|date',
+            'status' => 'required'
+        ]);
+
+        $proker = Proker::create($validate);
+
+        if(!$proker){
+            return redirect(route('prokers.index'))->with('message', 'Data Proker Gagal ditambahkan');
+        }
+
+        return redirect(route('prokers.index'))->with('message', 'Data Proker Berhasil ditambahkan');
     }
 
     /**
@@ -44,7 +67,13 @@ class ProkerController extends Controller
      */
     public function edit(Proker $proker)
     {
-        //
+        $divisions = Divisi::orderBy('name_divisi')->get();
+
+        return view('backend.prokers.edit', [
+            'title' => 'Edit Proker',
+            'proker' => $proker,
+            'divisions' => $divisions
+        ]);
     }
 
     /**
@@ -52,7 +81,21 @@ class ProkerController extends Controller
      */
     public function update(Request $request, Proker $proker)
     {
-        //
+        $validate = $request->validate([
+            'id' => 'required|uuid',
+            'name_proker' => 'required|string',
+            'divisi_id' => 'required|uuid',
+            'description' => 'required|max:255',
+            'tanggal_pelaksanaan' => 'required|date',
+            'status' => 'required'
+        ]); 
+
+        $proker_update = $proker->update($validate);
+        if(!$proker_update){
+            return redirect(route('prokers.index'))->with('message', 'Data Proker Gagal di update');
+        }
+
+        return redirect(route('prokers.index'))->with('message', 'Data Proker Berhasil di update');
     }
 
     /**
@@ -60,6 +103,12 @@ class ProkerController extends Controller
      */
     public function destroy(Proker $proker)
     {
-        //
+        $proker_delete = $proker->delete();
+        if(!$proker_delete){
+            return redirect(route('prokers.index'))->with('message', 'Data Proker Gagal dihapus');
+        }
+
+        return redirect(route('prokers.index'))->with('message', 'Data Proker Berhasil dihapus');
+    
     }
 }

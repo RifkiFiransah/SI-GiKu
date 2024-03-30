@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('absensis', function (Blueprint $table) {
+        Schema::create('acaras', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('acara_id');
-            $table->foreignUuid('user_id');
-            $table->foreignUuid('divisi_id');
-            $table->string('bukti_kegiatan')->nullable();
-            $table->text('resume_kegiatan')->nullable();
+            $table->string("name_kegiatan");
+            $table->string('foto_kegiatan')->nullable();
+            $table->date('tgl_kegiatan');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('absensis');
+        Schema::dropIfExists('acaras');
     }
 };
