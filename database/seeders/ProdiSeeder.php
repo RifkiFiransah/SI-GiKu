@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Prodi;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class ProdiSeeder extends Seeder
 {
@@ -14,34 +12,38 @@ class ProdiSeeder extends Seeder
      */
     public function run(): void
     {
-        Prodi::insert(
+        $prodies = [
             [
-                [
-                    'id' => Str::uuid(),
-                    'name_prodi' => 'Teknik Informatika',
-                    'name_fakultas' => 'Fakultas Ilmu Komputer',
-                ],
-                [
-                    'id' => Str::uuid(),
-                    'name_prodi' => 'Pendidikan Bahasa Sastra Inggris',
-                    'name_fakultas' => 'Fakultas Keguruan dan Ilmu Keguruan',
-                ],
-                [
-                    'id' => Str::uuid(),
-                    'name_prodi' => 'Pendidikan Matematika',
-                    'name_fakultas' => 'Fakultas Keguruan dan Ilmu Keguruan',
-                ],
-                [
-                    'id' => Str::uuid(),
-                    'name_prodi' => 'Manajemen',
-                    'name_fakultas' => 'Fakultas Ekonomi dan Bisnis',
-                ],
-                [
-                    'id' => Str::uuid(),
-                    'name_prodi' => 'Sistem Informasi',
-                    'name_fakultas' => 'Fakultas Ilmu Komputer',
-                ],
-            ]
-        );
+                'name_prodi' => 'Teknik Informatika',
+                'name_fakultas' => 'Fakultas Ilmu Komputer',
+            ],
+            [
+                'name_prodi' => 'Pendidikan Bahasa Sastra Inggris',
+                'name_fakultas' => 'Fakultas Keguruan dan Ilmu Keguruan',
+            ],
+            [
+                'name_prodi' => 'Pendidikan Matematika',
+                'name_fakultas' => 'Fakultas Keguruan dan Ilmu Keguruan',
+            ],
+            [
+                'name_prodi' => 'Manajemen',
+                'name_fakultas' => 'Fakultas Ekonomi dan Bisnis',
+            ],
+            [
+                'name_prodi' => 'Sistem Informasi',
+                'name_fakultas' => 'Fakultas Ilmu Komputer',
+            ],
+            [
+                'name_prodi' => 'Pendidikan Bahasa Indonesia',
+                'name_fakultas' => 'Fakultas Keguruan dan Ilmu Keguruan',
+            ],
+        ];
+
+        foreach ($prodies as $prodi) {
+            Prodi::firstOrCreate(
+                ['name_prodi' => $prodi['name_prodi']],
+                ['name_fakultas' => $prodi['name_fakultas']]
+            );
+        }
     }
 }

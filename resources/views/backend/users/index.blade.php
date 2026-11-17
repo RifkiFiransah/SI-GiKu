@@ -1,5 +1,15 @@
 @extends('backend.layouts.main')
 @section('content')
+    @php
+        $roleBadges = [
+            'ketua' => 'bg-primary',
+            'wakil ketua' => 'bg-info text-dark',
+            'sekertaris' => 'bg-success',
+            'bendahara' => 'bg-warning text-dark',
+            'kadiv' => 'bg-secondary',
+            'anggota' => 'bg-light text-dark border',
+        ];
+    @endphp
     <div class="row card">
         <div class="col-lg-12 align-items-stretch card-body">
             <h3 class="mt-4 card-title fw-semibold fs-5">Data User</h3>
@@ -10,6 +20,24 @@
                 <a href="{{ route('users.excel') }}" target="__blank" class="ms-2 btn btn-success"><i class="ti ti-file-spreadsheet"></i> Excel</a>
                 <a href="{{ route('users.csv') }}" target="__blank" class="ms-2 btn btn-warning"><i class="ti ti-report-analytics"></i> CSV</a>
             </div>
+            <form method="GET" action="{{ route('users.index') }}" class="row g-2 align-items-center mb-3">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="search-users" class="visually-hidden">Cari user</label>
+                    <input type="search" id="search-users" name="search" value="{{ $search }}" class="form-control"
+                        placeholder="Cari nama, email, prodi, atau divisi">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary"><i class="ti ti-search"></i> Cari</button>
+                    @if ($search !== '')
+                        <a href="{{ route('users.index') }}" class="btn btn-outline-secondary">Reset</a>
+                    @endif
+                </div>
+                @if ($search !== '')
+                    <div class="col-12">
+                        <p class="mb-0 small text-muted">Hasil pencarian "{{ $search }}": {{ $users->total() }} data.</p>
+                    </div>
+                @endif
+            </form>
             @if (session()->has('message'))
                 <div class="alert alert-success" role="alert">
                     {{ session('message') }}
@@ -45,7 +73,7 @@
                                 @forelse ($users as $user)
                                     <tr>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">{{ $loop->iteration }}</h6>
+                                            <h6 class="mb-0 fw-semibold">{{ $users->firstItem() + $loop->index }}</h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="mb-1 fw-semibold">{{ $user->name }}</h6>
@@ -61,8 +89,7 @@
                                         </div> --}}
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">{{ $user->role }}</p>
-                                            {{-- <h6 class="mb-0 fw-semibold fs-4"></h6> --}}
+                                            <span class="badge {{ $roleBadges[$user->role] ?? 'bg-secondary' }} rounded-3 fw-semibold">{{ isset($roleBadges[$user->role]) ? ucfirst($user->role) : 'Belum diketahui' }}</span>
                                         </td>
                                         <td class="border-bottom-0">
                                             <a href="{{ route('users.show', $user) }}" class="p-2 me-1 badge bg-success"><i
@@ -79,11 +106,14 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">Data Belum tersedia</td>
+                                        <td colspan="6">Data Belum tersedia</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                           </table>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-end">
+                        {{ $users->links() }}
                     </div>
                 </div>
             </div>
@@ -106,14 +136,14 @@
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name">
                             @error('name')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-6">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
                             @error('email')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-6">
@@ -126,8 +156,8 @@
                                     <option disabled>data belum tersedia</option>
                                 @endforelse
                             </select>
-                            @error('prodi')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            @error('prodi_id')
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-6">
@@ -140,8 +170,8 @@
                                     <option disabled>data belum tersedia</option>
                                 @endforelse
                             </select>
-                            @error('divisi')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            @error('divisi_id')
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-6">
@@ -154,7 +184,7 @@
                                 <option value="anggota">Anggota</option>
                             </select>
                             @error('role')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-6">
@@ -162,21 +192,21 @@
                             <input type="number" name="no_telp" class="form-control" id="no_telp"
                                 aria-describedby="emailHelp">
                             @error('no_telp')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Alamat</label>
                             <textarea name="address" id="address" cols="30" rows="3" class="form-control"></textarea>
-                            @error('password')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            @error('address')
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" id="password">
                             @error('password')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>

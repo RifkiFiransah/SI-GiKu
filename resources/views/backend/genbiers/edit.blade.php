@@ -13,7 +13,7 @@
                             <label for="name_genbi" class="form-label">Nama Genbi</label>
                             <input type="text" class="form-control" id="name_genbi" name="name_genbi" value="{{ $genbi->name_genbi }}">
                             @error('name_genbi')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3 col-12">
@@ -21,15 +21,30 @@
                             <input type="text" class="form-control" id="ketua_umum" value="{{ $genbi->ketua_umum }}"
                                 name="ketua_umum">
                             @error('ketua_umum')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Alamat</label>
                             <textarea name="address" id="address" cols="30" rows="3" class="form-control">{{ $genbi->address }}</textarea>
-                            @error('password')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            @error('address')
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label for="logo" class="form-label">Logo (nama file di assets/images/logos)</label>
+                            <input type="text" class="form-control" id="logo" name="logo" value="{{ $genbi->logo }}">
+                            @error('logo')
+                                <div class="form-text">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label class="form-label">Komisariat saat ini</label>
+                            <div class="form-check">
+                                <input type="hidden" name="is_current" value="0">
+                                <input class="form-check-input" type="checkbox" id="is_current" name="is_current" value="1" @checked($genbi->is_current)>
+                                <label class="form-check-label" for="is_current">Tandai sebagai komisariat saat ini</label>
+                            </div>
                         </div>
                         <div class="my-3">
                             <a href="{{ route('genbiers.index') }}" class="btn btn-danger">Close</a>

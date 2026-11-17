@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Divisi;
 use App\Models\Prodi;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -16,46 +14,55 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $bph = Divisi::where('name_divisi', 'Badan Pengurus Harian')->first();
-        $kesehatan = Divisi::where('name_divisi', 'Kesehatan')->first();
-        $ti = Prodi::where('name_prodi', 'Teknik Informatika')->first();
-        $pbsi = Prodi::where('name_prodi', 'Pendidikan Bahasa Sastra Inggris')->first();
-        
-        $ketua = User::create([
-            'id' => Str::uuid(),
-            'name' => 'Alya Naomi',
-            // 'divisi_id' => $bph->id,
-            'address' => 'Kabupaten Kuningan',
-            'no_telp' => '0812',
-            'role' => 'ketua',
-            'email' => 'ketua@gmail.com',
-            'password' => bcrypt('password123')
-        ]);
-        $ketua->hasRole('ketua');
+        $users = [
+            ['name' => 'Rifki Firansah', 'role' => 'ketua', 'divisi' => 'Badan Pengurus Harian', 'prodi' => 'Teknik Informatika', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Rangga Pratama', 'role' => 'wakil ketua', 'divisi' => 'Badan Pengurus Harian', 'prodi' => 'Manajemen', 'kota' => 'Kota Cirebon'],
+            ['name' => 'Tiara Anggraini', 'role' => 'sekertaris', 'divisi' => 'Badan Pengurus Harian', 'prodi' => 'Pendidikan Matematika', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Nadia Putri', 'role' => 'bendahara', 'divisi' => 'Badan Pengurus Harian', 'prodi' => 'Manajemen', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Dimas Saputra', 'role' => 'kadiv', 'divisi' => 'Komunikasi & Informasi', 'prodi' => 'Sistem Informasi', 'kota' => 'Kota Cirebon'],
+            ['name' => 'Salsa Amelia', 'role' => 'kadiv', 'divisi' => 'Pendidikan & Pelatihan', 'prodi' => 'Pendidikan Bahasa Sastra Inggris', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Rizky Ramadhan', 'role' => 'kadiv', 'divisi' => 'Kesehatan', 'prodi' => 'Pendidikan Matematika', 'kota' => 'Kabupaten Majalengka'],
+            ['name' => 'Farhan Maulana', 'role' => 'kadiv', 'divisi' => 'Kewirausahaan', 'prodi' => 'Manajemen', 'kota' => 'Kota Cirebon'],
+            ['name' => 'Putri Maharani', 'role' => 'kadiv', 'divisi' => 'Sosial & Pemberdayaan', 'prodi' => 'Pendidikan Bahasa Sastra Inggris', 'kota' => 'Kabupaten Indramayu'],
+            ['name' => 'Bagas Prakoso', 'role' => 'kadiv', 'divisi' => 'Olahraga & Seni', 'prodi' => 'Teknik Informatika', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Intan Permata', 'role' => 'kadiv', 'divisi' => 'Humas & Relasi', 'prodi' => 'Manajemen', 'kota' => 'Kota Cirebon'],
+            ['name' => 'Aditya Kurnia', 'role' => 'kadiv', 'divisi' => 'Komunikasi & Informasi', 'prodi' => 'Sistem Informasi', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Citra Dewi', 'role' => 'anggota', 'divisi' => 'Komunikasi & Informasi', 'prodi' => 'Sistem Informasi', 'kota' => 'Kota Cirebon'],
+            ['name' => 'Bima Arya', 'role' => 'anggota', 'divisi' => 'Pendidikan & Pelatihan', 'prodi' => 'Pendidikan Bahasa Sastra Inggris', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Nabila Zahra', 'role' => 'anggota', 'divisi' => 'Pendidikan & Pelatihan', 'prodi' => 'Pendidikan Matematika', 'kota' => 'Kabupaten Majalengka'],
+            ['name' => 'Yoga Firmansyah', 'role' => 'anggota', 'divisi' => 'Kesehatan', 'prodi' => 'Pendidikan Matematika', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Salma Aulia', 'role' => 'anggota', 'divisi' => 'Kesehatan', 'prodi' => 'Teknik Informatika', 'kota' => 'Kota Cirebon'],
+            ['name' => 'Reza Ananda', 'role' => 'anggota', 'divisi' => 'Kewirausahaan', 'prodi' => 'Manajemen', 'kota' => 'Kabupaten Indramayu'],
+            ['name' => 'Dinda Lestari', 'role' => 'anggota', 'divisi' => 'Kewirausahaan', 'prodi' => 'Sistem Informasi', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Arif Hidayat', 'role' => 'anggota', 'divisi' => 'Sosial & Pemberdayaan', 'prodi' => 'Pendidikan Bahasa Sastra Inggris', 'kota' => 'Kabupaten Majalengka'],
+            ['name' => 'Mega Silalahi', 'role' => 'anggota', 'divisi' => 'Sosial & Pemberdayaan', 'prodi' => 'Manajemen', 'kota' => 'Kota Cirebon'],
+            ['name' => 'Fajar Nugroho', 'role' => 'anggota', 'divisi' => 'Olahraga & Seni', 'prodi' => 'Teknik Informatika', 'kota' => 'Kabupaten Kuningan'],
+            ['name' => 'Luna Maharani', 'role' => 'anggota', 'divisi' => 'Olahraga & Seni', 'prodi' => 'Pendidikan Matematika', 'kota' => 'Kabupaten Indramayu'],
+            ['name' => 'Gilang Mahendra', 'role' => 'anggota', 'divisi' => 'Humas & Relasi', 'prodi' => 'Sistem Informasi', 'kota' => 'Kota Cirebon'],
+        ];
 
-        $sekertaris = User::create([
-            'id' => Str::uuid(),
-            'name' => 'Tiara',
-            // 'divisi_id' => $bph->id,
-            'address' => 'Kabupaten Kuningan',
-            'no_telp' => '0812',
-            'role' => 'sekertaris',
-            'email' => 'sekertaris@gmail.com',
-            'password' => bcrypt('password123')
-        ]);
-        $sekertaris->hasRole('sekertaris');
+        foreach ($users as $index => $data) {
+            $divisiId = Divisi::where('name_divisi', $data['divisi'])->value('id');
+            $prodiId = Prodi::where('name_prodi', $data['prodi'])->value('id');
+            $email = str_replace(' ', '.', strtolower($data['name'])) . '@genbi.test';
 
-        $anggota = User::create([
-            'id' => Str::uuid(),
-            'name' => 'Rifki',
-            // 'divisi_id' => $kesehatan->id,
-            'address' => 'Kabupaten Kuningan',
-            'no_telp' => '0812',
-            'role' => 'anggota',
-            'email' => 'rifki@gmail.com',
-            'password' => bcrypt('password123')
-        ]);
-        $anggota->hasRole('anggota');
+            User::updateOrCreate(
+                ['email' => $email],
+                [
+                    'name' => $data['name'],
+                    'divisi_id' => $divisiId,
+                    'prodi_id' => $prodiId,
+                    'address' => $data['kota'] . ', Jawa Barat',
+                    'no_telp' => '0812' . str_pad((string) (100000 + $index + 1), 6, '0', STR_PAD_LEFT),
+                    'role' => $data['role'],
+                    'email_verified_at' => now(),
+                    'password' => 'password123',
+                ]
+            );
 
+            if (in_array($data['role'], ['ketua', 'kadiv'], true) && $divisiId) {
+                Divisi::where('id', $divisiId)->update(['head' => $data['name']]);
+            }
+        }
     }
 }

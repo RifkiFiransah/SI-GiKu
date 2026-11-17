@@ -15,7 +15,7 @@
                       <label for="name_divisi" class="form-label">Nama</label>
                       <input type="text" class="form-control" id="name_divisi" name="name_divisi" value="{{ $divisi->name_divisi }}">
                       @error('name_divisi')
-                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                          <div class="form-text">{{ $message }}</div>
                       @enderror
                   </div>
                 </div>
@@ -37,7 +37,7 @@
                           <option value="anggota">Anggota</option> --}}
                       </select>
                       @error('head')
-                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                          <div class="form-text">{{ $message }}</div>
                       @enderror
                 </div>
                 {{-- <label for="password" class="form-label">Password</label> --}}

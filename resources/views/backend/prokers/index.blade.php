@@ -1,8 +1,16 @@
 @extends('backend.layouts.main')
 @section('content')
+    @php
+        $statusBadges = [
+            'belum' => 'bg-secondary',
+            'sedang berjalan' => 'bg-primary',
+            'selesai' => 'bg-success',
+            'tidak berjalan' => 'bg-danger',
+        ];
+    @endphp
     <div class="row card">
         <div class="col-lg-12 card-body">
-            <h3 class="mt-4 card-title fw-semibold fs-5">Data Genbi Wilayah</h3>
+            <h3 class="mt-4 card-title fw-semibold fs-5">Data Program Kerja</h3>
             <div class="flex-wrap px-1 py-2 d-flex justify-content-end">
                 <button type="button" class="ms-2 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                         class="ti ti-user-plus"></i> Tambah
@@ -14,6 +22,24 @@
                 <a href="{{ route('users.csv') }}" target="__blank" class="ms-2 btn btn-warning"><i
                         class="ti ti-report-analytics"></i> CSV</a>
             </div>
+            <form method="GET" action="{{ route('prokers.index') }}" class="row g-2 align-items-center mb-3">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="search-prokers" class="visually-hidden">Cari program kerja</label>
+                    <input type="search" id="search-prokers" name="search" value="{{ $search }}" class="form-control"
+                        placeholder="Cari proker, status, divisi, atau penanggung jawab">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary"><i class="ti ti-search"></i> Cari</button>
+                    @if ($search !== '')
+                        <a href="{{ route('prokers.index') }}" class="btn btn-outline-secondary">Reset</a>
+                    @endif
+                </div>
+                @if ($search !== '')
+                    <div class="col-12">
+                        <p class="mb-0 small text-muted">Hasil pencarian "{{ $search }}": {{ $prokers->total() }} data.</p>
+                    </div>
+                @endif
+            </form>
             @if (session()->has('message'))
                 <div class="alert alert-success" role="alert">
                     {{ session('message') }}
@@ -49,7 +75,7 @@
                                 @forelse ($prokers as $proker)
                                     <tr>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">{{ $loop->iteration }}</h6>
+                                            <h6 class="mb-0 fw-semibold">{{ $prokers->firstItem() + $loop->index }}</h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="mb-1 fw-semibold">{{ $proker->name_proker }}</h6>
@@ -58,7 +84,7 @@
                                             <p class="mb-0 fw-normal">{{ $proker->Divisi->name_divisi ?? '' }}</p>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 rounded-4 fw-normal badge bg-primary">{{ $proker->status }}</p>
+                                            <span class="badge {{ $statusBadges[$proker->status] ?? 'bg-secondary' }} rounded-3 fw-semibold">{{ isset($statusBadges[$proker->status]) ? ucfirst($proker->status) : 'Belum diketahui' }}</span>
                                         </td>
                                         <td class="border-bottom-0">
                                             <p class="mb-0 fw-normal">{{ $proker->tanggal_pelaksanaan }}</p>
@@ -80,11 +106,14 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">Data Belum tersedia</td>
+                                        <td colspan="6">Data Belum tersedia</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-end">
+                        {{ $prokers->links() }}
                     </div>
                 </div>
             </div>
@@ -108,14 +137,14 @@
                           <label for="name_proker" class="form-label">Program Kerja</label>
                           <input type="text" class="form-control" id="name_proker" name="name_proker">
                           @error('name_proker')
-                              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                              <div class="form-text">{{ $message }}</div>
                           @enderror
                       </div>
                       <div class="col-12">
                         <label for="description" class="form-label">Deskripsi</label>
                         <textarea name="description" id="description" cols="30" rows="3" class="form-control"></textarea>
-                        @error('password')
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        @error('description')
+                        <div class="form-text">{{ $message }}</div>
                         @enderror
                       </div>
                       <div class="col-12">
@@ -134,7 +163,7 @@
                           <input type="date" class="form-control" id="tanggal_pelaksanaan" aria-describedby="emailHelp"
                               name="tanggal_pelaksanaan">
                           @error('tanggal_pelaksanaan')
-                              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                              <div class="form-text">{{ $message }}</div>
                           @enderror
                       </div>
                   </div>

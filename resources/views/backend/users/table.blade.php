@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SI-GiKu | Export</title>
-    <link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8000/assets/images/logos/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="http://127.0.0.1:8000/assets/images/logos/logo-genbi.webp" />
     <link rel="stylesheet" href="http://127.0.0.1:8000/assets/css/styles.min.css" />
 </head>
 

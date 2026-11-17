@@ -8,14 +8,13 @@
             <form action="{{ route('absensi.update', $acara) }}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <input type="hidden" name="id" value="{{ $acara->id }}">
-                <input type="hidden" name="foto_kegiatan_old" value="{{ $acara->foto_kegiatan }}">
+
                 <div class="mb-3 row">
                   <div class="col-12">
                       <label for="name_kegiatan" class="form-label">Nama Kegiatan</label>
                       <input type="text" class="form-control" id="name_kegiatan" name="name_kegiatan" value="{{ $acara->name_kegiatan }}">
                       @error('name_kegiatan')
-                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                          <div class="form-text">{{ $message }}</div>
                       @enderror
                   </div>
                 </div>
@@ -24,7 +23,7 @@
                       <label for="tgl_kegiatan" class="form-label">Tanggal Kegiatan</label>
                       <input type="date" class="form-control" id="tgl_kegiatan" name="tgl_kegiatan" value="{{ $acara->tgl_kegiatan }}">
                       @error('tgl_kegiatan')
-                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                          <div class="form-text">{{ $message }}</div>
                       @enderror
                   </div>
                 </div>
@@ -33,13 +32,13 @@
                       <label for="image" class="form-label">Foto Kegiatan</label>
                       <input type="file" class="form-control" id="image" name="image">
                       @error('image')
-                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                          <div class="form-text">{{ $message }}</div>
                       @enderror
                   </div>
                 </div>
                 <div class="mt-3 row">
                   <div class="col-12">
-                    <a href="{{ route('absensi.index') }}" class="btn btn-danger">Back</a>
+                    <a href="{{ route('absensi.index') }}" class="btn btn-danger">Kembali</a>
                     <button type="submit" class="btn btn-primary">Edit Data</button>
                   </div>
                 </div>

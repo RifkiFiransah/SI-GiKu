@@ -6,11 +6,12 @@ use App\Exports\UsersExport;
 use App\Models\Divisi;
 use App\Models\Prodi;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
-// use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
-use Mpdf\Mpdf;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
+// use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use Mpdf\Mpdf;
+
 // use Spatie\LaravelPdf\Facades\Pdf;
 
 class UserController extends Controller
@@ -18,9 +19,23 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with(['prodi', 'divisi'])->orderBy('name')->get();
+        $search = trim((string) $request->query('search', ''));
+        $term = '%'.addcslashes($search, '%_\\').'%';
+        $users = User::with(['prodi', 'divisi'])
+            ->when($search !== '', function ($query) use ($term) {
+                $query->where(function ($query) use ($term) {
+                    $query->where('name', 'like', $term)
+                        ->orWhere('email', 'like', $term)
+                        ->orWhere('role', 'like', $term)
+                        ->orWhereHas('prodi', fn ($query) => $query->where('name_prodi', 'like', $term))
+                        ->orWhereHas('divisi', fn ($query) => $query->where('name_divisi', 'like', $term));
+                });
+            })
+            ->orderBy('name')
+            ->paginate(5)
+            ->withQueryString();
         $prodies = Prodi::orderBy('name_prodi')->get();
         $divisions = Divisi::orderBy('name_divisi')->get();
 
@@ -28,7 +43,8 @@ class UserController extends Controller
             'title' => 'Data user',
             'users' => $users,
             'prodies' => $prodies,
-            'divisions' => $divisions
+            'divisions' => $divisions,
+            'search' => $search,
         ]);
     }
 
@@ -60,7 +76,7 @@ class UserController extends Controller
             'address' => 'required',
             'no_telp' => 'required',
             'role' => 'required',
-            'password' => 'required|min:3'
+            'password' => 'required|min:3',
         ]);
 
         User::create($validate);
@@ -75,7 +91,7 @@ class UserController extends Controller
     {
         return response()->view('backend.users.show', [
             'title' => 'Detail User',
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -92,7 +108,7 @@ class UserController extends Controller
             'title' => 'Edit User',
             'user' => $user,
             'prodies' => $prodies,
-            'divisions' => $divisions
+            'divisions' => $divisions,
         ]);
     }
 
@@ -104,7 +120,7 @@ class UserController extends Controller
         $validate = $request->validate([
             'id' => 'required',
             'name' => 'required|min:3|max:50',
-            'email' => "required|email",
+            'email' => 'required|email',
             'prodi_id' => 'required',
             'divisi_id' => 'required',
             'address' => 'required',
@@ -131,12 +147,12 @@ class UserController extends Controller
     {
         return Excel::download(new UsersExport, 'anggota_genbiUniku.xlsx');
     }
-    
+
     public function export_csv()
     {
         return Excel::download(new UsersExport, 'anggota_genbiUniku.csv', \Maatwebsite\Excel\Excel::CSV, [
             'Content-Type' => 'text/csv',
-      ]);
+        ]);
     }
 
     public function export_pdf()
@@ -152,7 +168,7 @@ class UserController extends Controller
         // return Pdf::view('pdfs.invoice', ['users' => $users])
         //     ->format('a4')
         //     ->name('your-invoice.pdf');
-        $mpdf = new \Mpdf\Mpdf();
+        $mpdf = new Mpdf;
         $mpdf->loadView(view('backend.users.table', ['users' => $users]));
         // $mpdf->WriteHTML('<table class="table mb-0 align-middle text-nowrap" style="border: 2px solid #4F73D9">
         // <thead class="text-dark fs-4 bg-primary">

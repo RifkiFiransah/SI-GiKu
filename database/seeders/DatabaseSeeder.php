@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             DivisiSeeder::class,
             UserSeeder::class,
             GenbiSeeder::class,
-            ProkerSeeder::class
+            ProkerSeeder::class,
+            AcaraSeeder::class,
         ]);
     }
 }

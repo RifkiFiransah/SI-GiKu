@@ -1,8 +1,8 @@
 <div>
     <div class="brand-logo d-flex align-items-center justify-content-between">
         {{-- <h1 class=""> --}}
-            <a href="./index.html" class="text-nowrap logo-img text-dark fw-bold" style="font-weight: 900">
-            <img src="{{ asset('assets/images/logos/GenBIoriginal.webp') }}" width="170" alt="" />
+            <a href="{{ route('backend.dashboard') }}" class="text-nowrap logo-img text-dark fw-bold" style="font-weight: 900">
+            <img src="{{ asset('assets/images/logos/GenBIoriginal.webp') }}" width="170" alt="GenBI UNIKU" />
             {{-- SI-GiKu --}}
             </a>
         {{-- </h1> --}}
@@ -17,7 +17,7 @@
                 <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('backend.dashboard') ? 'active' : '' }}" href="{{ route('backend.dashboard') }}" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('dashboard', 'backend.dashboard') ? 'active' : '' }}" href="{{ route('backend.dashboard') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-layout-dashboard"></i>
                     </span>
@@ -68,12 +68,20 @@
                     <span class="hide-menu">Genbi Wilayah</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link {{ request()->routeIs('prodis.*') ? 'active' : '' }}" href="{{ route('prodis.index') }}" aria-expanded="false">
+                    <span>
+                        <i class="ti ti-school"></i>
+                    </span>
+                    <span class="hide-menu">Prodi</span>
+                </a>
+            </li>
             <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">SELF</span>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profil.index') }}" aria-expanded="false">
+                <a class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.edit') }}" aria-expanded="false">
                     <span>
                         <i class="ti ti-user"></i>
                     </span>
@@ -81,12 +89,15 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ request()->routeIs('logout') ? 'active' : '' }}" href="{{ route('logout') }}" aria-expanded="false">
-                    <span>
-                        <i class="ti ti-logout"></i>
-                    </span>
-                    <span class="hide-menu">Logout</span>
-                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="sidebar-link border-0 bg-transparent text-start w-100">
+                        <span>
+                            <i class="ti ti-logout"></i>
+                        </span>
+                        <span class="hide-menu">Logout</span>
+                    </button>
+                </form>
             </li>
         </ul>
     </nav>

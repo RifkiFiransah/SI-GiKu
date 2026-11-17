@@ -14,6 +14,24 @@
                 <a href="{{ route('users.csv') }}" target="__blank" class="ms-2 btn btn-warning"><i
                         class="ti ti-report-analytics"></i> CSV</a>
             </div>
+            <form method="GET" action="{{ route('genbiers.index') }}" class="row g-2 align-items-center mb-3">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="search-genbiers" class="visually-hidden">Cari genbi</label>
+                    <input type="search" id="search-genbiers" name="search" value="{{ $search }}" class="form-control"
+                        placeholder="Cari nama, ketua umum, atau alamat">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary"><i class="ti ti-search"></i> Cari</button>
+                    @if ($search !== '')
+                        <a href="{{ route('genbiers.index') }}" class="btn btn-outline-secondary">Reset</a>
+                    @endif
+                </div>
+                @if ($search !== '')
+                    <div class="col-12">
+                        <p class="mb-0 small text-muted">Hasil pencarian "{{ $search }}": {{ $genbiers->total() }} data.</p>
+                    </div>
+                @endif
+            </form>
             @if (session()->has('message'))
                 <div class="alert alert-success" role="alert">
                     {{ session('message') }}
@@ -38,6 +56,9 @@
                                         <h6 class="mb-0 fw-semibold">Alamat</h6>
                                     </th>
                                     <th class="border-bottom-0">
+                                        <h6 class="mb-0 fw-semibold">Status</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
                                         <h6 class="mb-0 fw-semibold">Action</h6>
                                     </th>
                                 </tr>
@@ -46,7 +67,7 @@
                                 @forelse ($genbiers as $genbi)
                                     <tr>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">{{ $loop->iteration }}</h6>
+                                            <h6 class="mb-0 fw-semibold">{{ $genbiers->firstItem() + $loop->index }}</h6>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="mb-1 fw-semibold">{{ $genbi->name_genbi }}</h6>
@@ -56,6 +77,13 @@
                                         </td>
                                         <td class="border-bottom-0">
                                             <p class="mb-0 fw-normal">{{ $genbi->address }}</p>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            @if ($genbi->is_current)
+                                                <span class="badge bg-success rounded-3 fw-semibold">Komisariat saat ini</span>
+                                            @else
+                                                <span class="badge bg-secondary rounded-3 fw-semibold">Komisariat</span>
+                                            @endif
                                         </td>
                                         <td class="border-bottom-0">
                                             <a href="{{ route('genbiers.edit', $genbi) }}"
@@ -72,11 +100,14 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4">Data Belum tersedia</td>
+                                        <td colspan="6">Data Belum tersedia</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-end">
+                        {{ $genbiers->links() }}
                     </div>
                 </div>
             </div>
@@ -98,7 +129,7 @@
                             <label for="name_genbi" class="form-label">Nama Genbi</label>
                             <input type="text" class="form-control" id="name_genbi" name="name_genbi">
                             @error('name_genbi')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-12">
@@ -106,15 +137,30 @@
                             <input type="text" class="form-control" id="ketua_umum" aria-describedby="emailHelp"
                                 name="ketua_umum">
                             @error('ketua_umum')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Alamat</label>
                             <textarea name="address" id="address" cols="30" rows="3" class="form-control"></textarea>
-                            @error('password')
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            @error('address')
+                                <div class="form-text">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="col-12">
+                            <label for="logo" class="form-label">Logo (nama file di assets/images/logos)</label>
+                            <input type="text" class="form-control" id="logo" name="logo">
+                            @error('logo')
+                                <div class="form-text">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Komisariat saat ini</label>
+                            <div class="form-check">
+                                <input type="hidden" name="is_current" value="0">
+                                <input class="form-check-input" type="checkbox" id="is_current" name="is_current" value="1">
+                                <label class="form-check-label" for="is_current">Tandai sebagai komisariat saat ini</label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

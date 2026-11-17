@@ -10,13 +10,24 @@ class GenbiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $genbiers = Genbi::orderBy('name_genbi')->get();
+        $search = trim((string) $request->query('search', ''));
+        $term = '%'.addcslashes($search, '%_\\').'%';
+        $genbiers = Genbi::query()
+            ->when($search !== '', fn ($query) => $query->where(function ($query) use ($term) {
+                $query->where('name_genbi', 'like', $term)
+                    ->orWhere('ketua_umum', 'like', $term)
+                    ->orWhere('address', 'like', $term);
+            }))
+            ->orderBy('name_genbi')
+            ->paginate(5)
+            ->withQueryString();
 
         return view('backend.genbiers.index', [
             'title' => 'Data Genbi',
-            'genbiers' => $genbiers
+            'genbiers' => $genbiers,
+            'search' => $search,
         ]);
     }
 
@@ -37,12 +48,20 @@ class GenbiController extends Controller
             'id' => 'required',
             'name_genbi' => 'required|unique:genbis',
             'ketua_umum' => 'required|unique:genbis',
-            'address' => 'required'
+            'address' => 'required',
+            'logo' => 'nullable|string|max:255|regex:/^[A-Za-z0-9._-]*$/',
+            'is_current' => 'boolean',
         ]);
+
+        $validate['is_current'] = (bool) ($validate['is_current'] ?? false);
+
+        if ($validate['is_current']) {
+            Genbi::query()->where('is_current', true)->update(['is_current' => false]);
+        }
 
         $genbi = Genbi::create($validate);
 
-        if(!$genbi){
+        if (! $genbi) {
             return redirect(route('genbiers.index'))->with('message', 'Data Genbi gagal ditambahkan');
         }
 
@@ -67,7 +86,7 @@ class GenbiController extends Controller
         // ddd($genbi);
         return view('backend.genbiers.edit', [
             'title' => 'Edit Genbi',
-            'genbi' => $genbi
+            'genbi' => $genbi,
         ]);
     }
 
@@ -80,13 +99,25 @@ class GenbiController extends Controller
             'id' => 'required',
             'name_genbi' => 'required',
             'ketua_umum' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            'logo' => 'nullable|string|max:255|regex:/^[A-Za-z0-9._-]*$/',
+            'is_current' => 'boolean',
         ]);
 
+        $validate['is_current'] = (bool) ($validate['is_current'] ?? false);
+
+        if ($validate['is_current']) {
+            Genbi::query()
+                ->where('is_current', true)
+                ->where('id', '!=', $id)
+                ->update(['is_current' => false]);
+        }
+
         $genbi = Genbi::findOrFail($id)->update($validate);
-        if(!$genbi){
+        if (! $genbi) {
             return redirect(route('genbiers.index'))->with('message', 'Data Genbi gagal diupdate');
         }
+
         return redirect(route('genbiers.index'))->with('message', 'Data Genbi berhasil diupdate');
     }
 
@@ -97,9 +128,10 @@ class GenbiController extends Controller
     {
         $genbi = Genbi::findOrFail($id)->delete();
 
-        if(!$genbi){
+        if (! $genbi) {
             return redirect(route('genbiers.index'))->with('message', 'Data Genbi gagal dihapus');
         }
+
         return redirect(route('genbiers.index'))->with('message', 'Data Genbi berhasil dihapus');
     }
 }

@@ -4,6 +4,8 @@ use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\GenbiController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProkerController;
 use App\Http\Controllers\UserController;
@@ -20,13 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', LandingController::class)->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,8 +30,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/backend/dashboard',[DashboardController::class, 'index'])->name('backend.dashboard');
-Route::resource('/absensi',DashboardController::class);
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::get('/backend/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('backend.dashboard');
 
 Route::get('/users/export_excel', [UserController::class, 'export_excel'])->name('users.excel');
 Route::get('/users/export_pdf', [UserController::class, 'export_pdf'])->name('users.pdf');
@@ -46,7 +47,8 @@ Route::resource('/users', UserController::class)->except('create');
 Route::resource('divisions', DivisiController::class);
 Route::resource('prokers', ProkerController::class)->except('create');
 Route::resource('genbiers', GenbiController::class)->except('create');
-Route::resource('profil', ProfileController::class)->except('create');
+Route::resource('prodis', ProdiController::class)->except('create');
+Route::post('/absensi/{acara}/hadir', [AbsensiController::class, 'hadir'])->name('absensi.hadir');
 Route::resource('absensi', AbsensiController::class)->except('create');
 
 require __DIR__.'/auth.php';

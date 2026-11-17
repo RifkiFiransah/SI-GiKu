@@ -7,35 +7,28 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+          <a class="nav-link nav-icon-hover" href="{{ route('absensi.index') }}" aria-label="Lihat absensi kegiatan">
             <i class="ti ti-bell-ringing"></i>
-            <div class="notification bg-primary rounded-circle"></div>
           </a>
         </li>
       </ul>
       <div class="px-0 navbar-collapse justify-content-end" id="navbarNav">
         <ul class="flex-row navbar-nav ms-auto align-items-center justify-content-end">
-          {{-- <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a> --}}
           <li class="nav-item dropdown">
             <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
-              aria-expanded="false">
+              aria-expanded="false" aria-label="Menu akun">
               <img src="{{ asset('assets/images/profile/user-1.jpg') }}" alt="" width="35" height="35" class="rounded-circle">
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
               <div class="message-body">
-                <a href="javascript:void(0)" class="gap-2 d-flex align-items-center dropdown-item">
+                <a href="{{ route('profile.edit') }}" class="gap-2 d-flex align-items-center dropdown-item">
                   <i class="ti ti-user fs-6"></i>
-                  <p class="mb-0 fs-3">My Profile</p>
+                  <p class="mb-0 fs-3">Profil Saya</p>
                 </a>
-                <a href="javascript:void(0)" class="gap-2 d-flex align-items-center dropdown-item">
-                  <i class="ti ti-mail fs-6"></i>
-                  <p class="mb-0 fs-3">My Account</p>
-                </a>
-                <a href="javascript:void(0)" class="gap-2 d-flex align-items-center dropdown-item">
-                  <i class="ti ti-list-check fs-6"></i>
-                  <p class="mb-0 fs-3">My Task</p>
-                </a>
-                <a href="./authentication-login.html" class="mx-3 mt-2 btn btn-outline-primary d-block">Logout</a>
+                <form method="POST" action="{{ route('logout') }}" class="mx-3 mt-2">
+                  @csrf
+                  <button type="submit" class="btn btn-outline-primary d-block w-100">Keluar</button>
+                </form>
               </div>
             </div>
           </li>

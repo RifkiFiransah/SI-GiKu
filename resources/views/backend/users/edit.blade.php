@@ -15,14 +15,14 @@
                               <label for="name" class="form-label">Nama</label>
                               <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
                               @error('name')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                           <div class="col-6">
                               <label for="exampleInputEmail1" class="form-label">Email address</label>
                               <input type="email" class="form-control" id="exampleInputEmail1" value="{{ $user->email }}" name="email">
                               @error('email')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                         </div>
@@ -41,8 +41,8 @@
                                       <option disabled>data belum tersedia</option>
                                   @endforelse
                               </select>
-                              @error('prodi')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                              @error('prodi_id')
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                           <div class="col-6">
@@ -59,8 +59,8 @@
                                       <option disabled>data belum tersedia</option>
                                   @endforelse
                               </select>
-                              @error('divisi')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                              @error('divisi_id')
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                         </div>
@@ -75,7 +75,7 @@
                                   <option {{ ($user->role === 'anggota') ? 'selected' : '' }} value="anggota">Anggota</option>
                               </select>
                               @error('role')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                           <div class="col-6">
@@ -83,7 +83,7 @@
                               <input type="number" name="no_telp" class="form-control" id="no_telp"
                               value="{{ $user->no_telp }}">
                               @error('no_telp')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                         </div>
@@ -92,8 +92,8 @@
                           <div class="col-12">
                               <label for="address" class="form-label">Alamat</label>
                               <textarea name="address" id="address" cols="30" rows="3" class="form-control">{{ $user->address }}</textarea>
-                              @error('password')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                              @error('address')
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                         </div>

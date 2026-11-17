@@ -14,14 +14,14 @@
                                 <label for="name_proker" class="form-label">Program Kerja</label>
                                 <input type="text" class="form-control" id="name_proker" name="name_proker" value="{{ $proker->name_proker }}">
                                 @error('name_proker')
-                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                    <div class="form-text">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-12">
                                 <label for="description" class="form-label">Deskripsi</label>
                                 <textarea name="description" id="description" cols="30" rows="3" class="form-control">{{ $proker->description }}</textarea>
-                                @error('password')
-                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                @error('description')
+                                    <div class="form-text">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-12">
@@ -43,7 +43,7 @@
                               <label for="status" class="form-label">Status</label>
                               <input type="text" class="form-control" id="status" name="status" value="{{ $proker->status ?? '' }}">
                               @error('status')
-                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                  <div class="form-text">{{ $message }}</div>
                               @enderror
                           </div>
                             <div class="col-12">
@@ -51,7 +51,7 @@
                                 <input type="date" class="form-control" id="tanggal_pelaksanaan"
                                     value="{{ $proker->tanggal_pelaksanaan }}" name="tanggal_pelaksanaan">
                                 @error('tanggal_pelaksanaan')
-                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                    <div class="form-text">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-6">

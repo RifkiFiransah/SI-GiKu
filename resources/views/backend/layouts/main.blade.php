@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SI-GiKu | {{ $title }}</title>
-    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/logo-genbi.webp') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
 </head>
 
@@ -34,9 +34,9 @@
 
                 {{-- copyright --}}
                 <div class="px-6 py-6 text-center">
-                    <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
-                            class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a
-                            href="https://themewagon.com">ThemeWagon</a></p>
+                    <p class="mb-0 fs-4">Design and Developed by <a href="https://github.com/rifkifiransah"
+                            target="_blank" class="pe-1 text-primary text-decoration-underline">Rifki Firansah</a>
+                        Distributed for <a href="https://genbi.com">Genbi Uniku</a></p>
                 </div>
                 {{-- end copyright --}}
             </div>

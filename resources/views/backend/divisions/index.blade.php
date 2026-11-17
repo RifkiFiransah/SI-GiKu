@@ -10,6 +10,24 @@
           <a href="{{ route('users.excel') }}" target="__blank" class="ms-2 btn btn-success"><i class="ti ti-file-spreadsheet"></i> Excel</a>
           <a href="{{ route('users.csv') }}" target="__blank" class="ms-2 btn btn-warning"><i class="ti ti-report-analytics"></i> CSV</a>
       </div>
+      <form method="GET" action="{{ route('divisions.index') }}" class="row g-2 align-items-center mb-3">
+          <div class="col-12 col-md-6 col-lg-4">
+              <label for="search-divisions" class="visually-hidden">Cari divisi</label>
+              <input type="search" id="search-divisions" name="search" value="{{ $search }}" class="form-control"
+                  placeholder="Cari nama atau kepala divisi">
+          </div>
+          <div class="col-auto">
+              <button type="submit" class="btn btn-primary"><i class="ti ti-search"></i> Cari</button>
+              @if ($search !== '')
+                  <a href="{{ route('divisions.index') }}" class="btn btn-outline-secondary">Reset</a>
+              @endif
+          </div>
+          @if ($search !== '')
+              <div class="col-12">
+                  <p class="mb-0 small text-muted">Hasil pencarian "{{ $search }}": {{ $divisions->total() }} data.</p>
+              </div>
+          @endif
+      </form>
       @if (session()->has('message'))
           <div class="alert alert-success" role="alert">
               {{ session('message') }}
@@ -39,13 +57,17 @@
                           @forelse ($divisions as $divisi)
                               <tr>
                                   <td class="border-bottom-0">
-                                      <h6 class="mb-0 fw-semibold">{{ $loop->iteration }}</h6>
+                                      <h6 class="mb-0 fw-semibold">{{ $divisions->firstItem() + $loop->index }}</h6>
                                   </td>
                                   <td class="border-bottom-0">
                                       <h6 class="mb-1 fw-semibold">{{ $divisi->name_divisi }}</h6>
                                   </td>
                                   <td class="border-bottom-0">
-                                      <p class="mb-0 fw-normal">{{ $divisi->head ?? '' }}</p>
+                                      @if ($divisi->head)
+                                          <span class="badge bg-light text-dark border rounded-3 fw-semibold">{{ $divisi->head }}</span>
+                                      @else
+                                          <span class="badge bg-secondary rounded-3 fw-semibold">Belum ditetapkan</span>
+                                      @endif
                                   </td>
                                   <td class="border-bottom-0">
                                       <a href="divisions/{{ $divisi->id }}" class="p-2 me-1 badge bg-success"><i
@@ -68,6 +90,9 @@
                       </tbody>
                     </table>
               </div>
+              <div class="mt-3 d-flex justify-content-end">
+                  {{ $divisions->links() }}
+              </div>
           </div>
       </div>
   </div>
@@ -89,14 +114,14 @@
                       <label for="name_divisi" class="form-label">Nama Divisi</label>
                       <input type="text" class="form-control" id="name_divisi" name="name_divisi" required>
                       @error('name_divisi')
-                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                          <div class="form-text">{{ $message }}</div>
                       @enderror
                   </div>
                   {{-- <div class="mb-3">
                       <label for="password" class="form-label">Ketua</label>
                       <input type="password" name="password" class="form-control" id="password">
                       @error('password')
-                          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                          <div class="form-text">{{ $message }}</div>
                       @enderror
                   </div> --}}
               </div>
